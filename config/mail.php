@@ -44,6 +44,9 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            
+            // Проверка SLL для отправки почты
+            'verify_peer' => false,
         ],
 
         'ses' => [

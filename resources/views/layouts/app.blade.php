@@ -43,10 +43,10 @@
     </main>
 
     {{-- Подвал сайта --}}
-    <footer>
+    {{-- <footer>
         @component('partials.footer')
         @endcomponent
-    </footer>
+    </footer> --}}
 
     {{-- Скрипты сайта --}}
     @component('layouts.resources.scripts')
