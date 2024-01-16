@@ -11,10 +11,20 @@ class Message extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
+
     protected $fillable = [
         'content',
         'user_id',
         'chat_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function chat()
+    {
+        return $this->belongsTo(Chat::class, 'chat_id');
+    }
 }

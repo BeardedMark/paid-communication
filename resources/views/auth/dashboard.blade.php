@@ -18,7 +18,7 @@
                     <p><strong>{{ Auth::user()->name }}</strong></p>
                     <form method="POST" action="{{ route('auth.logout') }}">
                         @csrf
-                        <button type="submit" class="btn btn-danger">Выйти</button>
+                        <button type="submit">Выйти</button>
                     </form>
                 @else
                     <p><a href="{{ route('auth.login') }}">Авторизация</a></p>

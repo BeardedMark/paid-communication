@@ -1,6 +1,10 @@
-@foreach ($messages as $index => $message)
-    <li>
-        <a href="#"><small>{{ $message->user_id }} : </small></a>
-        <a href="{{ route('messages.show', $index) }}">{{ $message->content }}</a>
-    </li>
-@endforeach
+@if (count($messages) > 0)
+    <ul>
+        @foreach ($messages as $message)
+            @component('messages.components.message', compact('message'))
+            @endcomponent
+        @endforeach
+    </ul>
+@else
+    <p>🫥 Список чатов пуст</p>
+@endif

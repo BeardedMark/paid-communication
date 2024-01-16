@@ -3,18 +3,18 @@
 @section('title', 'Авторизация')
 
 @section('form')
-    <form method="POST" action="{{ route('auth.login') }}" class="mt-3">
+    <form method="POST" action="{{ route('auth.login') }}">
         @csrf
-        <div class="mb-3">
-            <label for="login" class="form-label">Ваш логин или Email</label>
-            <input id="login" type="text" name="name" value="{{ old('name') }}" class="form-control" required>
+        <div>
+            <label for="login" >Ваш логин или Email</label>
+            <input id="login" type="text" name="name" value="{{ old('name') }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Текущий пароль</label>
-            <input id="password" type="password" name="password" class="form-control" required>
+        <div>
+            <label for="password">Текущий пароль</label>
+            <input id="password" type="password" name="password" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Войти</button>
+        <button type="submit">Войти</button>
     </form>
 @endsection

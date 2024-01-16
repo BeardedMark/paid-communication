@@ -9,7 +9,7 @@
             <div class="col">
 
                 @foreach ($users as $user)
-                <p><a href="{{ route('users.show', $user) }}">{{ $user->name }}</a></p>
+                    <p><a href="{{ route('users.show', $user) }}">{{ $user->name }}</a></p>
                 @endforeach
             </div>
         </div>

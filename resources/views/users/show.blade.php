@@ -10,14 +10,26 @@
                 <p>ID: {{ $user->id }}</p>
                 <p>Email: {{ $user->email }}</p>
                 <p>Регистрация: {{ $user->created_at }}</p>
+                
+                @if ($user->email_verified_at)
+                    <p>Подтверждение: {{ $user->email_verified_at }}</p>
+                @endif
 
                 @if ($user->updated_at != $user->created_at)
-                    <p>Обновлен: {{ $user->updated_at }}</p>
+                    <p>Обновление: {{ $user->updated_at }}</p>
                 @endif
 
                 @if ($user->deleted_at)
-                    <p>Удален: {{ $user->deleted_at }}</p>
+                    <p>Удаление: {{ $user->deleted_at }}</p>
                 @endif
+
+                <form action="{{ route('chats.store') }}" method="post">
+                    @csrf
+                    <input type="text" name="owner_id" value="{{ $user->id }}" required hidden>
+                    <input type="text" name="initiator_id" value="{{ Auth::user()->id }}" required hidden>
+    
+                    <button type="submit">Создать чат</button>
+                </form>
             </div>
         </div>
     </div>

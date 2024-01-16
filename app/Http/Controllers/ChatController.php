@@ -6,6 +6,8 @@ use App\Models\Chat;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -14,12 +16,11 @@ class ChatController extends Controller
      */
     public function index()
     {
-        // $content = $this->readJsonContent('welcome');
         $chats = Chat::all();
 
         $title = 'title';
         $description = 'description';
-        
+
         return view('chats.index', compact('title', 'description', 'chats'));
     }
 
@@ -37,7 +38,22 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $owner_id = $request->input('owner_id');
+        $initiator_id = $request->input('initiator_id');
+
+        $chatData = [
+            'owner_id' => $owner_id,
+            'initiator_id' => $initiator_id,
+        ];
+
+        // Chat::create($chatData);
+
+        $chat = Chat::firstOrCreate([
+            'owner_id' => $owner_id,
+            'initiator_id' => $initiator_id
+        ]);
+
+        return redirect()->route('chats.show', $chat);
     }
 
     /**
@@ -45,7 +61,8 @@ class ChatController extends Controller
      */
     public function show(Chat $chat)
     {
-        return view('chats.show');
+        $caht = Chat::find($chat);
+        return view('chats.show', compact('chat'));
     }
 
     /**
@@ -70,5 +87,15 @@ class ChatController extends Controller
     public function destroy(Chat $chat)
     {
         //
+    }
+
+    public function ajaxIndex()
+    {
+        // $chats = Chat::query()
+        // ->where('user_id', Auth::user()->id);
+        $outgoing = Auth::user()->outgoing;
+        $incoming = Auth::user()->incoming;
+
+        return view('chats.ajax.index', compact('outgoing', 'incoming'));
     }
 }

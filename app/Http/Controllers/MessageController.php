@@ -1,25 +1,21 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    private $useDatabase = true; // Переключатель для использования базы данных или JSON файла
-    private $filePath = 'content/messages.json';
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if ($this->useDatabase) {
-            $messages = Message::all();
-        } else {
-            $messages = $this->readMessages();
-        }
+
+        $messages = Message::all();
 
         return view('messages.index', compact('messages'));
     }
@@ -38,48 +34,33 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $message = $request->input('message');
+        $chat_id = $request->input('chat_id');
 
         $messageData = [
-            'user_id' => '1',
-            'chat_id' => '1',
-            'content' => $message . ' ' . $request->session()->getId(),
+            'user_id' => Auth::user()->id,
+            'chat_id' => $chat_id,
+            'content' => $message,
         ];
-    
-        if ($message !== null) {
-            // dd(compact('message'));
-            Message::create($messageData);
-        }
+
+        Message::create($messageData);
+
         return redirect()->route('messages.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Message $message)
     {
-        if ($this->useDatabase) {
-            $message = Message::findOrFail($id);
-        } else {
-            $messages = $this->readMessages();
-            $message = $messages[$id] ?? null;
-        }
-
-        return view('messages.show', compact('message', 'id'));
+        return view('messages.show', compact('message'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Message $message)
     {
-        if ($this->useDatabase) {
-            $message = Message::findOrFail($id);
-        } else {
-            $messages = $this->readMessages();
-            $message = $messages[$id] ?? null;
-        }
-
-        return view('messages.edit', compact('message', 'id'));
+        return view('messages.edit', compact('message'));
     }
 
     /**
@@ -87,16 +68,10 @@ class MessageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($this->useDatabase) {
-            $message = Message::findOrFail($id);
-            $message->update($request->all());
-        } else {
-            $messages = $this->readMessages();
-            $messages[$id] = $request->all();
-            $this->writeMessages($messages);
-        }
+        $message = Message::findOrFail($id);
+        $message->update($request->all());
 
-        return redirect()->route('messages.index');
+        return redirect()->route('chats.show', $message->chat);
     }
 
     /**
@@ -104,44 +79,15 @@ class MessageController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->useDatabase) {
-            $message = Message::findOrFail($id);
-            $message->delete();
-        } else {
-            $messages = $this->readMessages();
-            unset($messages[$id]);
-            $this->writeMessages($messages);
-        }
+        $message = Message::findOrFail($id);
+        $message->delete();
 
         return redirect()->route('messages.index');
     }
 
-    private function readMessages()
-    {
-        $path = storage_path($this->filePath);
-
-        if (File::exists($path)) {
-            $contents = File::get($path);
-            return json_decode($contents, true);
-        }
-
-        return [];
-    }
-
-    private function writeMessages($messages)
-    {
-        $path = storage_path($this->filePath);
-        $contents = json_encode($messages, JSON_PRETTY_PRINT);
-        File::put($path, $contents);
-    }
-
     public function indexAjax()
     {
-        if ($this->useDatabase) {
-            $messages = Message::all();
-        } else {
-            $messages = $this->readMessages();
-        }
+        $messages = Message::all();
 
         return view('messages.partial.index', compact('messages'));
     }

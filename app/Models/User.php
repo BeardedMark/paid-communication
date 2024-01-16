@@ -46,4 +46,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    public function outgoing()
+    {
+        return $this->hasMany(Chat::class, 'initiator_id');
+    }
+        
+    public function incoming()
+    {
+        return $this->hasMany(Chat::class, 'owner_id');
+    }
 }

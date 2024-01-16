@@ -45,4 +45,6 @@ Route::get('/', [PageController::class, 'welcome'])->name('pages.welcome');
 Route::get('/about', [PageController::class, 'about'])->name('pages.about');
 Route::get('/messages/index/ajax', [MessageController::class, 'indexAjax'])->name('messages.index.ajax');
 Route::resource('messages', MessageController::class);
+
+Route::get('/chats/index/ajax', [ChatController::class, 'ajaxIndex'])->name('chats.index.ajax');
 Route::resource('chats', ChatController::class);

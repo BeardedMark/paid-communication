@@ -19,6 +19,9 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false)->comment('Администратор');
             $table->timestamp('email_verified_at')->nullable()->comment('Дата верификации');
             $table->string('password')->comment('Пароль');
+            
+            $table->integer('balance')->default(0)->comment('Баланс');
+            
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
