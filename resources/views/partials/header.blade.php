@@ -5,6 +5,7 @@
                 <li><a href="{{ route('pages.welcome') }}">Главная</a></li>
                 <li><a href="{{ route('pages.about') }}">Описание</a></li>
                 <li><a href="404">404</a></li>
+                <li><a href="{{ route('pages.messanger') }}">Мессенджер</a></li>
             </ul>
         </div>
 

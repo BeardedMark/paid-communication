@@ -29,20 +29,22 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
 });
 
-// Route::middleware(['admin'])->group(function () {
-//     Route::resource('/users', UserController::class)->except(['show']);
-// });
-
-
-
 Route::get('/password/reset',  [AuthController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/password/email',  [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/password/reset/{token}',  [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/password/reset', [AuthController::class, 'reset']);
 
+// Route::middleware(['admin'])->group(function () {
+//     Route::resource('/users', UserController::class)->except(['show']);
+// });
 
+// Статичные страницы
 Route::get('/', [PageController::class, 'welcome'])->name('pages.welcome');
 Route::get('/about', [PageController::class, 'about'])->name('pages.about');
+Route::get('/messanger', [PageController::class, 'messanger'])->name('pages.messanger');
+
+
+//  Динамичные страницы
 Route::get('/messages/index/ajax', [MessageController::class, 'indexAjax'])->name('messages.index.ajax');
 Route::resource('messages', MessageController::class);
 

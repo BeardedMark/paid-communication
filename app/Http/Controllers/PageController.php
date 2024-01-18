@@ -30,6 +30,12 @@ class PageController extends Controller
         return view('pages.about', compact('title', 'description'));
     }
 
+    
+    public function messanger()
+    {        
+        return view('pages.messanger');
+    }
+
     private function readJsonContent($page)
     {
         $jsonData = json_decode(file_get_contents(storage_path($this->jsonPath)), true);

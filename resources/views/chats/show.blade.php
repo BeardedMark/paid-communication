@@ -1,7 +1,6 @@
 @extends('chats.index')
 
-@section('title', 'База данных')
-@section('description', 'Далог')
+@section('title', 'shats.show')
 
 @section('chat')
     <div class="row">
@@ -15,8 +14,9 @@
             <script>
                 function updateMessageList() {
                     $.ajax({
-                        url: '{{ route('messages.index.ajax') }}',
+                        url: '{{ route('messages.index.ajax', compact('chat')) }}',
                         type: 'GET',
+                        data: '{{ $chat }}',
                         success: function(data) {
                             $('#messages').html(data);
                         },
@@ -28,7 +28,7 @@
                 $(document).ready(function() {
                     updateMessageList();
 
-                    setInterval(updateMessageList, 2000);
+                    setInterval(updateMessageList, 1000);
                 });
             </script>
 

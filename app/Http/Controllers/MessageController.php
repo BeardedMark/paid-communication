@@ -6,6 +6,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Chat;
 
 class MessageController extends Controller
 {
@@ -85,9 +86,11 @@ class MessageController extends Controller
         return redirect()->route('messages.index');
     }
 
-    public function indexAjax()
+    public function indexAjax(Request $request)
     {
-        $messages = Message::all();
+        // $messages = Message::all();
+        $chat = Chat::find($request->input('chat'));
+        $messages = $chat->messages;
 
         return view('messages.partial.index', compact('messages'));
     }

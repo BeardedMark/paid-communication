@@ -1,7 +1,6 @@
 @extends('chats.index')
 
-@section('title', 'Новый чат')
-@section('description', 'Далог')
+@section('title', 'chats.create')
 
 @section('chat')
     <div class="row">
