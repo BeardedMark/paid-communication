@@ -13,12 +13,11 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Chat $chat)
     {
+        $messages = Message::where('chat_id', $chat->id)->get();
 
-        $messages = Message::all();
-
-        return view('messages.index', compact('messages'));
+        return view('messages.index', compact('messages', 'chat'));
     }
 
     /**
@@ -32,20 +31,20 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Chat $chat, Request $request)
     {
         $message = $request->input('message');
-        $chat_id = $request->input('chat_id');
+        // $chat_id = $request->input('chat_id');
 
         $messageData = [
             'user_id' => Auth::user()->id,
-            'chat_id' => $chat_id,
+            'chat_id' => $chat->id,
             'content' => $message,
         ];
 
         Message::create($messageData);
 
-        return redirect()->route('messages.index');
+        return redirect()->route('chats.messages.index', $chat);
     }
 
     /**
@@ -86,12 +85,12 @@ class MessageController extends Controller
         return redirect()->route('messages.index');
     }
 
-    public function indexAjax(Request $request)
+    public function getMessages(Chat $chat)
     {
-        // $messages = Message::all();
-        $chat = Chat::find($request->input('chat'));
-        $messages = $chat->messages;
-
-        return view('messages.partial.index', compact('messages'));
+        $messages = Message::where('chat_id', $chat->id)->get();
+    
+        return response()->json([
+            'messagesHtml' => view('messages.components.list', compact('messages'))->render(),
+        ]);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Message extends Model
 {
@@ -26,5 +27,15 @@ class Message extends Model
     public function chat()
     {
         return $this->belongsTo(Chat::class, 'chat_id');
+    }
+
+    public function getAutor()
+    {
+        $autor = $this->user->name;
+
+        if ($this->user->name === Auth::user()->name) {
+            $autor = "Вы";
+        }
+        return $autor;
     }
 }

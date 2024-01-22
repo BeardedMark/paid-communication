@@ -1,61 +1,54 @@
-@extends('layouts.app')
-@section('title', 'Список сообщений')
-@section('description', 'Основная посадочная страница')
+@extends('chats.index')
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Список сообщений</h1>
+@section('h1', $chat->getTitle())
 
-                <ul id="message-list">
-                    <li>Загрузка сообщений...</li>
-                </ul>
+@section('chat-content')
+    <ul id="messageList"></ul>
 
-                <script>
-                    function updateMessageList() {
-                        $.ajax({
-                            url: '{{ route('messages.index.ajax') }}',
-                            type: 'GET',
-                            success: function(data) {
-                                $('#message-list').html(data);
-                            }
-                        });
+    <form id="messageForm">
+        @csrf
+        <textarea class="w-100" name="message" id="messageText"></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Функция для обновления сообщений через Ajax
+            function loadMessages() {
+                $.ajax({
+                    url: "{{ route('chats.messages.ajax', compact('chat')) }}",
+                    method: "GET",
+                    success: function (data) {
+                        $("#messageList").html(data.messagesHtml);
+                    },
+                    error: function () {
+                        alert("Ошибка загрузки сообщений");
                     }
-                    $(document).ready(function() {
-                        updateMessageList();
+                });
+            }
 
-                        setInterval(updateMessageList, 1000); // 1 seconds
-                    });
-                </script>
+            // Функция для отправки нового сообщения через Ajax
+            $("#messageForm").submit(function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
 
-                <form id="message" action="{{ route('messages.store') }}">
-                    @csrf
-                    <input name="message">
-                    <button type="submit">Отправить</button>
-                </form>
-                <a href="{{ route('messages.create') }}">Крупное сообщение</a>
+                $.ajax({
+                    url: "{{ route('chats.messages.store', compact('chat')) }}",
+                    method: "POST",
+                    data: formData,
+                    success: function () {
+                        $("#messageText").val('');
+                        loadMessages();
+                    },
+                    error: function () {
+                        alert("Ошибка отправки сообщения");
+                    }
+                });
+            });
 
-                <script>
-                    $(document).ready(function() {
-                        $('#message').submit(function(e) {
-                            e.preventDefault();
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '{{ route('messages.store') }}',
-                                data: $(this).serialize(),
-                                success: function(response) {
-                                    console.log(response);
-                                },
-                                error: function(error) {
-                                    console.log(error);
-                                }
-                            });
-                        });
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
+            // Обновление сообщений
+            loadMessages();
+            setInterval(loadMessages, 1000);
+        });
+    </script>
 @endsection

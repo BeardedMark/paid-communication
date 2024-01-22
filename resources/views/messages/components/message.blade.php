@@ -1,3 +1,1 @@
-<li>
-    <a href="{{ route('messages.show', $message) }}">{{ $message->content }}</a>
-</li>
+<li>{{$message->getAutor()}} : {{ $message->content }}</li>

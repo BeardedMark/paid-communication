@@ -1,4 +1,4 @@
-@extends('chats.index')
+@extends('pages.messanger')
 
 @section('title', 'chats.create')
 

@@ -17,7 +17,7 @@ class ChatController extends Controller
         $outgoing = Auth::user()->outgoing;
         $incoming = Auth::user()->incoming;
 
-        return view('chats.ajax.index', compact('outgoing', 'incoming'));
+        return view('chats.index', compact('outgoing', 'incoming'));
     }
 
     /**
@@ -75,12 +75,14 @@ class ChatController extends Controller
     {
         //
     }
-
-    public function ajaxIndex()
+    public function getChatsAjax()
     {
         $outgoing = Auth::user()->outgoing;
         $incoming = Auth::user()->incoming;
-
-        return view('chats.ajax.index', compact('outgoing', 'incoming'));
+    
+        return response()->json([
+            'incomingChatsHtml' => view('chats.components.incoming', compact('incoming'))->render(),
+            'outgoingChatsHtml' => view('chats.components.outgoing', compact('outgoing'))->render(),
+        ]);
     }
 }

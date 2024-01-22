@@ -27,6 +27,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
     Route::resource('users', UserController::class);
+
+    Route::get('/chats/ajax', [ChatController::class, 'getChatsAjax'])->name('chats.ajax');
+    Route::resource('chats', ChatController::class);
+
+    Route::get('/chats/{chat}/messages/ajax', [MessageController::class, 'getMessages'])->name('chats.messages.ajax');
+    Route::resource('chats.messages', MessageController::class);
 });
 
 Route::get('/password/reset',  [AuthController::class, 'showLinkRequestForm'])->name('password.request');
@@ -41,12 +47,13 @@ Route::post('/password/reset', [AuthController::class, 'reset']);
 // Статичные страницы
 Route::get('/', [PageController::class, 'welcome'])->name('pages.welcome');
 Route::get('/about', [PageController::class, 'about'])->name('pages.about');
-Route::get('/messanger', [PageController::class, 'messanger'])->name('pages.messanger');
+
+
 
 
 //  Динамичные страницы
-Route::get('/messages/index/ajax', [MessageController::class, 'indexAjax'])->name('messages.index.ajax');
-Route::resource('messages', MessageController::class);
+// Route::get('/messages/index/ajax', [MessageController::class, 'indexAjax'])->name('messages.index.ajax');
+// Route::resource('messages', MessageController::class);
 
-Route::get('/chats/index/ajax', [ChatController::class, 'ajaxIndex'])->name('chats.index.ajax');
-Route::resource('chats', ChatController::class);
+// Route::get('/chats/index/ajax', [ChatController::class, 'ajaxIndex'])->name('chats.index.ajax');
+// Route::resource('chats', ChatController::class);

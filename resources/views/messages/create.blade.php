@@ -1,21 +1,26 @@
-@extends('layouts.app')
-@section('title', 'Главная страница')
-@section('description', 'Основная посадочная страница')
+<form id="message" action="{{ route('messages.store') }}">
+    @csrf
+    <input name="message">
+    <button type="submit">Отправить</button>
+</form>
+<a href="{{ route('messages.create') }}">Крупное сообщение</a>
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Главная страница</h1>
-                
-                <form action="{{ route('messages.store') }}" method="post">
-                    @csrf
-                    <input name="message">
-                    <button type="submit">Отправить</button>
-                </form>
+<script>
+    $(document).ready(function() {
+        $('#message').submit(function(e) {
+            e.preventDefault();
 
-                <a href="{{ route('messages.index') }}">К списку сообщений</a>
-            </div>
-        </div>
-    </div>
-@endsection
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('messages.store') }}',
+                data: $(this).serialize(),
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

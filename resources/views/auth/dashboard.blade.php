@@ -7,6 +7,12 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <h1>Ваш аккаунт</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
                 @component('partials.alert')
                 @endcomponent
             </div>
