@@ -3,8 +3,14 @@
 
     <ul>
         @foreach ($incoming as $chat)
-        <li class="chatItem" data-chat-id="{{ $chat->id }}">        
+        <li>        
             <a href="{{ route('chats.messages.index', $chat) }}">{{ $chat->getTitle() }}</a>
+            <ul>
+                @foreach ($chat->getLastThreeMessages(1) as $message)
+                    @component('messages.components.message', compact('message'))
+                    @endcomponent
+                @endforeach
+            </ul>
         </li>
         @endforeach
     </ul>

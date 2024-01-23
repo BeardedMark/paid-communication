@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 class Chat extends Model
 {
@@ -32,15 +33,20 @@ class Chat extends Model
 
     public function getTitle()
     {
-        $title = "Чат с ";
+        $title = "";
 
         if ($this->initiator_id === $this->owner_id) {
-            $title .= "вами";
+            $title .= "Избранное";
         } else if($this->initiator_id == Auth::user()->id) {
             $title .= $this->owner->name;
         } else if($this->owner_id == Auth::user()->id) {
             $title .= $this->initiator->name;
         }
         return $title;
+    }
+
+    public function getLastThreeMessages(int $count): Collection
+    {
+        return $this->messages()->latest()->take($count)->get();
     }
 }

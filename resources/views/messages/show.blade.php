@@ -1,18 +1,14 @@
-@extends('layouts.app')
-@section('title', 'Главная страница')
-@section('description', 'Основная посадочная страница')
+@extends('chats.index')
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Главная страница</h1>
-                <p><strong>Автор:</strong> {{ $message->user->name }}</p>
-                <p><strong>Содержание:</strong> {{ $message->content }}</p>
-                <a href="{{ route('messages.edit', compact('message')) }}">Редактировать сообщение</a>
-                <br>
-                <a href="{{ route('messages.index') }}">К списку сообщений</a>
-            </div>
-        </div>
-    </div>
+@section('h1', "Сообщение № $message->id")
+@section('chat-content')
+    <p><strong>Содержание:</strong> {{ $message->content }}</p>
+    <p><strong>Автор:</strong> {{ $message->user->name }}</p>
+    <p><strong>Чат:</strong> {{ $message->chat->getTitle() }}</p>
+    <p><strong>Дата написания:</strong> {{ $message->created_at }}</p>
+    <p><strong>Дата изменения:</strong> {{ $message->updated_at }}</p>
+    <a href="{{ route('chats.messages.edit', ['message' => $message, 'chat' => $message->chat]) }}">Редактировать
+        сообщение</a>
+    <br>
+    <a href="{{ route('chats.messages.index', ['chat' => $message->chat]) }}">К списку сообщений</a>
 @endsection

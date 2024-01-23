@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Chat;
+use Illuminate\Support\Carbon;
 
 class MessageController extends Controller
 {
@@ -50,7 +50,7 @@ class MessageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Message $message)
+    public function show(Chat $chat, Message $message)
     {
         return view('messages.show', compact('message'));
     }
@@ -58,7 +58,7 @@ class MessageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Message $message)
+    public function edit(Chat $chat, Message $message)
     {
         return view('messages.edit', compact('message'));
     }
@@ -66,31 +66,41 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Chat $chat, Message $message, Request $request)
     {
-        $message = Message::findOrFail($id);
+        $message = Message::findOrFail($message);
         $message->update($request->all());
 
-        return redirect()->route('chats.show', $message->chat);
+        return redirect()->route('chats.messages.index', $chat);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Message $message)
     {
-        $message = Message::findOrFail($id);
+        $message = Message::findOrFail($message);
         $message->delete();
 
-        return redirect()->route('messages.index');
+        return redirect()
+            ->route('messages.index');
     }
 
-    public function getMessages(Chat $chat)
+    public function getMessages(Chat $chat, Request $request)
     {
-        $messages = Message::where('chat_id', $chat->id)->get();
-    
+        // $messages = Message::where('chat_id', $chat->id)->get();
+        $date = Message::where('chat_id', $chat->id)
+            ->latest('created_at')
+            ->value('created_at');
+
+        $day = $date ? Carbon::parse($date)->toDateString() : "Нет сообщений";
+
+        $messages = Message::where('chat_id', $chat->id)
+            ->whereDate('created_at', $day)
+            ->get();
+
         return response()->json([
-            'messagesHtml' => view('messages.components.list', compact('messages'))->render(),
+            'messagesHtml' => view('messages.components.list', compact('messages', 'day'))->render(),
         ]);
     }
 }

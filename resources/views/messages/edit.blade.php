@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col">
                 <h1>Главная страница</h1>
-                <form action="{{ route('messages.update', $message) }}" method="post">
+                <form action="{{ route('chats.messages.update', ['message' => $message, 'chat' => $message->chat]) }}" method="post">
                     @csrf
                     @method('PUT')
                     <label for="content">Содержание:</label>
@@ -16,9 +16,9 @@
                     <button type="submit">Сохранить</button>
                 </form>
                 <br>
-                <a href="{{ route('messages.show', $message) }}">Просмотр сообщения</a>
+                <a href="{{ route('chats.messages.show', ['message' => $message, 'chat' => $message->chat]) }}">Просмотр сообщения</a>
                 <br>
-                <a href="{{ route('messages.index') }}">К списку сообщений</a>
+                <a href="{{ route('chats.messages.index', ['chat' => $message->chat]) }}">К списку сообщений</a>
             </div>
         </div>
     </div>

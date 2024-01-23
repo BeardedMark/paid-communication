@@ -38,4 +38,12 @@ class Message extends Model
         }
         return $autor;
     }
+
+    public function getTime()
+    {
+        $date = $this->created_at;
+        $time = $date->format('H:i');
+
+        return $time;
+    }
 }

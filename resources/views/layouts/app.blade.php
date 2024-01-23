@@ -3,7 +3,7 @@
 
 <head>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-    <title>@yield('title', 'PCRENT')</title>
+    <title>@yield('title', env('APP_NAME'))</title>
     <meta name="description" content="@yield('description', 'pcrent.devirs.com')">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
