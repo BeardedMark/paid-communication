@@ -39,7 +39,13 @@
 
     {{-- Контент сайта --}}
     <main id="main" class="position-relative">
-        @yield('content')
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
     </main>
 
     {{-- Подвал сайта --}}

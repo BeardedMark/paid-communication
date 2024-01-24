@@ -31,7 +31,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chats/ajax', [ChatController::class, 'getChatsAjax'])->name('chats.ajax');
     Route::resource('chats', ChatController::class);
 
-    Route::get('/chats/{chat}/messages/ajax', [MessageController::class, 'getMessages'])->name('chats.messages.ajax');
+    Route::get('/chats/{chat}/messages/preview', [MessageController::class, 'getPreviewMessages'])->name('chats.messages.preview');
+    
+    Route::get('/chats/{chat}/messages/new', [MessageController::class, 'getNewMessages'])->name('chats.messages.new');
     Route::resource('chats.messages', MessageController::class);
 });
 

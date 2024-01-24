@@ -71,36 +71,84 @@ class MessageController extends Controller
         $message = Message::findOrFail($message);
         $message->update($request->all());
 
-        return redirect()->route('chats.messages.index', $chat);
+        return redirect()->route('chats.messages.show', ['message' => $message, 'chat' => $message->chat]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Message $message)
+    public function destroy($message)
     {
         $message = Message::findOrFail($message);
         $message->delete();
 
         return redirect()
-            ->route('messages.index');
+            ->route('chats.index');
     }
 
-    public function getMessages(Chat $chat, Request $request)
+    public function getPreviewMessages(Chat $chat, Request $request)
     {
-        // $messages = Message::where('chat_id', $chat->id)->get();
-        $date = Message::where('chat_id', $chat->id)
+        // Получение даты из запроса
+        $date = $request->input('date');
+
+        // Если дата не передана, использовать текущую дату
+        $selectedDate = $date ? Carbon::parse($date) : Carbon::now();
+
+        // Определение предыдущего дня общения
+        $lastDate = Message::where('chat_id', $chat->id)
+            ->whereDate('created_at', '<=', $selectedDate)
             ->latest('created_at')
             ->value('created_at');
 
-        $day = $date ? Carbon::parse($date)->toDateString() : "Нет сообщений";
+        // Определение предыдущего дня общения
+        $previousDate = Message::where('chat_id', $chat->id)
+            ->whereDate('created_at', '<', $lastDate)
+            ->latest('created_at')
+            ->value('created_at');
 
+        // Получение всех сообщений за указанный день
         $messages = Message::where('chat_id', $chat->id)
-            ->whereDate('created_at', $day)
+            ->whereDate('created_at', $lastDate)
             ->get();
+
+        $lastDate = Message::where('chat_id', $chat->id)
+            ->latest('created_at')
+            ->value('created_at');
+
+        // Преобразуем дату в строку или устанавливаем "Нет сообщений", если дата не найдена
+        $day = $previousDate ? Carbon::parse($previousDate)->toDateString() : null;
 
         return response()->json([
             'messagesHtml' => view('messages.components.list', compact('messages', 'day'))->render(),
+            'previousDate' => $previousDate,
+            'lastDate' => $lastDate,
+            'selectedDate' => $selectedDate,
+        ]);
+    }
+
+    public function getNewMessages(Chat $chat, Request $request)
+    {
+        // Получение даты из запроса
+        $date = $request->input('date');
+
+        // Если дата не передана, использовать текущую дату
+        $currentDate = $date ? Carbon::parse($date) : Carbon::now();
+
+        // Получение всех сообщений за указанный день
+        $messages = Message::where('chat_id', $chat->id)
+            ->where('created_at', '>', $currentDate)
+            ->get();
+
+        $lastDate = Message::where('chat_id', $chat->id)
+            ->latest('created_at')
+            ->value('created_at');
+
+        // Преобразуем дату в строку или устанавливаем "Нет сообщений", если дата не найдена
+        $day = $currentDate; //$date ? Carbon::parse($date)->toDateString() : "Нет сообщений";
+
+        return response()->json([
+            'messagesHtml' => view('messages.components.list', compact('messages', 'day'))->render(),
+            'lastDate' => $lastDate,
         ]);
     }
 }

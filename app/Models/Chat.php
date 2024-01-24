@@ -36,7 +36,7 @@ class Chat extends Model
         $title = "";
 
         if ($this->initiator_id === $this->owner_id) {
-            $title .= "Избранное";
+            $title .= "Ты шизофреник?";
         } else if($this->initiator_id == Auth::user()->id) {
             $title .= $this->owner->name;
         } else if($this->owner_id == Auth::user()->id) {
@@ -45,7 +45,7 @@ class Chat extends Model
         return $title;
     }
 
-    public function getLastThreeMessages(int $count): Collection
+    public function getLastMessages(int $count): Collection
     {
         return $this->messages()->latest()->take($count)->get();
     }
