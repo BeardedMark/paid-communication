@@ -16,11 +16,10 @@
     <ul>
         <li>Действия</li>
         <ul>
-            <li><a href="{{ route('chats.messages.index', ['chat' => $message->chat]) }}">К списку сообщений</a></li>
-            <li><a href="{{ route('chats.messages.edit', ['message' => $message, 'chat' => $message->chat]) }}">Редактировать
+            <li><a href="{{ route('messages.edit', compact('message')) }}">Редактировать
                     сообщение</a></li>
             <li>
-                <form action="{{ route('chats.messages.destroy', ['chat' => $message->chat, 'message' => $message]) }}"
+                <form action="{{ route('messages.destroy', ['message' => $message]) }}"
                     method="POST">
                     @csrf
                     @method('DELETE')

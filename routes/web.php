@@ -29,12 +29,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
 
     Route::get('/chats/ajax', [ChatController::class, 'getChatsAjax'])->name('chats.ajax');
+    Route::get('/chats/{chat}/messages/preview', [MessageController::class, 'getPreviewMessages'])->name('chats.messages.preview');
+    Route::get('/chats/{chat}/messages/new', [MessageController::class, 'getNewMessages'])->name('chats.messages.new');
     Route::resource('chats', ChatController::class);
 
-    Route::get('/chats/{chat}/messages/preview', [MessageController::class, 'getPreviewMessages'])->name('chats.messages.preview');
-    
-    Route::get('/chats/{chat}/messages/new', [MessageController::class, 'getNewMessages'])->name('chats.messages.new');
-    Route::resource('chats.messages', MessageController::class);
+    // Route::resource('chats.messages', MessageController::class);
+    Route::resource('messages', MessageController::class);
 });
 
 Route::get('/password/reset',  [AuthController::class, 'showLinkRequestForm'])->name('password.request');

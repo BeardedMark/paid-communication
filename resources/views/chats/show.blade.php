@@ -1,62 +1,120 @@
 @extends('chats.index')
 
-@section('title', 'shats.show')
+@section('h1', $chat->getTitle())
 
-@section('chat')
-    <div class="row">
-        <div class="col">
-            <h1>Чат с <a href="{{ route('users.show', $chat->owner->id) }}">{{ $chat->owner->name }}</a></h1>
-
-            <div id="messages">
-                <p>⏳ Загрузка сообщений...</p>
-            </div>
-
-            <script>
-                function updateMessageList() {
-                    $.ajax({
-                        url: '{{ route('messages.index.ajax', compact('chat')) }}',
-                        type: 'GET',
-                        data: '{{ $chat }}',
-                        success: function(data) {
-                            $('#messages').html(data);
-                        },
-                        error: function(error) {
-                            $('#messages').html('❌ Ошибка загрузки');
-                        }
-                    });
-                }
-                $(document).ready(function() {
-                    updateMessageList();
-
-                    setInterval(updateMessageList, 1000);
-                });
-            </script>
-
-            <form id="message">
-                @csrf
-                <input name="message">
-                <button type="submit">Отправить</button>
-            </form>
-
-            <script>
-                $(document).ready(function() {
-                    $('#message').submit(function(e) {
-                        e.preventDefault();
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '{{ route('messages.store', ['chat_id' => $chat->id]) }}',
-                            data: $(this).serialize(),
-                            success: function(response) {
-                                console.log(response);
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                    });
-                });
-            </script>
-        </div>
+@section('chat-content')
+    <div id="dialog" style="max-height: 60vh; overflow: hidden; overflow-y: auto;">
+        <button id="loadMore">Предыдущие</button>
+        <ul id="messageList"></ul>
     </div>
+
+    <form id="messageForm">
+        @csrf
+        <textarea class="w-100" name="message" id="messageText"></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            let startDateMessages;
+            let endDateMessage;
+
+            // Функция для обновления сообщений через Ajax
+            function loadMessages() {
+                $.ajax({
+                    url: "{{ route('chats.messages.preview', compact('chat')) }}",
+                    method: "GET",
+                    data: {
+                        date: startDateMessages,
+                    },
+                    success: function(data) {
+                        $("#messageList").prepend(data.messagesHtml);
+                        $("#messageList").prepend(`<hr>`);
+
+                        startDateMessages = data.previousDate;
+                        endDateMessage = data.lastDate;
+
+                        if (!data.previousDate) {
+                            $("#loadMore").remove();
+                        }
+                    },
+                    error: function() {
+                        // alert("Ошибка загрузки предыдущих сообщений");
+                        
+                        $("#loadMore").remove();
+                    }
+                });
+            }
+
+            // Функция для обновления сообщений через Ajax
+            function checkNew() {
+                $.ajax({
+                    url: "{{ route('chats.messages.new', compact('chat')) }}",
+                    method: "GET",
+                    data: {
+                        date: endDateMessage,
+                    },
+                    success: function(data) {
+                        let dialog = $("#dialog");
+
+                        let isScrolledToBottom = Math.ceil(dialog[0].scrollHeight - dialog
+                                .scrollTop()) <=
+                            Math.ceil(dialog.outerHeight());
+
+                        $("#messageList").append(data.messagesHtml);
+
+                        endDateMessage = data.lastDate;
+
+                        if (isScrolledToBottom) {
+
+                            scrollEnd();
+                        }
+                    },
+                    error: function() {
+                        alert("Ошибка загрузки новых сообщений");
+                    }
+                });
+            }
+
+            function scrollEnd() {
+                let dialog = $("#dialog");
+                dialog.scrollTop(dialog[0].scrollHeight);
+            }
+
+            // Функция для отправки нового сообщения через Ajax
+            $("#messageForm").submit(function(e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('messages.store', compact('chat')) }}",
+                    method: "POST",
+                    data: formData,
+                    success: function() {
+                        $("#messageText").val('');
+                    },
+                    error: function() {
+                        alert("Ошибка отправки сообщения");
+                    }
+                });
+            });
+
+            // Обработка нажатия клавиши "Enter" в поле ввода сообщения
+            $("#messageText").keydown(function(e) {
+                if (e.keyCode === 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $("#messageForm").submit();
+                }
+            });
+
+            $("#loadMore").on("click", function() {
+                loadMessages();
+            });
+
+            // Обновление сообщений
+            loadMessages();
+            scrollEnd();
+            setInterval(checkNew, 1000);
+        });
+    </script>
 @endsection

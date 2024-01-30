@@ -44,7 +44,7 @@ class MessageController extends Controller
 
         Message::create($messageData);
 
-        return redirect()->route('chats.messages.index', $chat);
+        return redirect()->route('messages.index', $chat);
     }
 
     /**
@@ -66,12 +66,12 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Chat $chat, Message $message, Request $request)
+    public function update($message, Request $request)
     {
         $message = Message::findOrFail($message);
         $message->update($request->all());
 
-        return redirect()->route('chats.messages.show', ['message' => $message, 'chat' => $message->chat]);
+        return redirect()->route('messages.show', ['message' => $message]);
     }
 
     /**

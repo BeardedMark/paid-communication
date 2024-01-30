@@ -41,7 +41,7 @@ class ChatController extends Controller
             'initiator_id' => $initiator_id
         ]);
 
-        return redirect()->route('chats.show', $chat);
+        return redirect()->route('chats.index', $chat);
     }
 
     /**

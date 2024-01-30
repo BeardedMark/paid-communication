@@ -4,7 +4,7 @@
     <ul>
         @foreach ($incoming as $chat)
         <li>        
-            <a href="{{ route('chats.messages.index', $chat) }}">{{ $chat->getTitle() }}</a>
+            <a href="{{ route('chats.show', $chat) }}">{{ $chat->getTitle() }}</a>
             <ul>
                 @foreach ($chat->getLastMessages(1) as $message)
                     @component('messages.components.message', compact('message'))

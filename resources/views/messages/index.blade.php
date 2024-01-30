@@ -39,7 +39,9 @@
                         }
                     },
                     error: function() {
-                        alert("Ошибка загрузки предыдущих сообщений");
+                        // alert("Ошибка загрузки предыдущих сообщений");
+                        
+                        $("#loadMore").remove();
                     }
                 });
             }
@@ -85,7 +87,7 @@
                 let formData = $(this).serialize();
 
                 $.ajax({
-                    url: "{{ route('chats.messages.store', compact('chat')) }}",
+                    url: "{{ route('messages.store', compact('chat')) }}",
                     method: "POST",
                     data: formData,
                     success: function() {
