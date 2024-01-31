@@ -1,17 +1,18 @@
 @if (isset($incoming) && count($incoming) > 0)
     <li>Входящие</li>
 
-    <ul>
+    <ul class="bord-second pos fib-13 font-size-6">
         @foreach ($incoming as $chat)
-        <li>        
-            <a href="{{ route('chats.show', $chat) }}">{{ $chat->getTitle() }}</a>
-            <ul>
+            <a class="hover-second pos pos-col fib-8 link" href="{{ route('chats.show', $chat) }}">
                 @foreach ($chat->getLastMessages(1) as $message)
-                    @component('messages.components.message', compact('message'))
-                    @endcomponent
+                    <div class="pos pos-row">
+                        <span class="pos pos-w-max font-bold">{{ $chat->getTitle() }}</span>
+                        <span>{{ $message->getTime() }}</span>
+                    </div>
+                       
+                    <span>{{ $message->getAutor() }}: {{ $message->content }}</span>
                 @endforeach
-            </ul>
-        </li>
+            </a>
         @endforeach
     </ul>
 @endif

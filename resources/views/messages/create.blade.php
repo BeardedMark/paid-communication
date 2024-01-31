@@ -1,9 +1,14 @@
+@extends('chats.index')
+
+@section('h1',  "Редактирование сообщения № $message->id")
+
+@section('chat-content')
+
 <form id="message" action="{{ route('messages.store') }}">
     @csrf
     <input name="message">
     <button type="submit">Отправить</button>
 </form>
-<a href="{{ route('messages.create') }}">Крупное сообщение</a>
 
 <script>
     $(document).ready(function() {
@@ -24,3 +29,4 @@
         });
     });
 </script>
+@endsection

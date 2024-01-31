@@ -1,6 +1,9 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/reset.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/default.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/framework/fibonacci.css') }}">
+<link rel="stylesheet" href="{{ asset('css/framework/position.css') }}">
+<link rel="stylesheet" href="{{ asset('css/framework/template.css') }}">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">

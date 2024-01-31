@@ -3,16 +3,18 @@
 @section('h1', $chat->getTitle())
 
 @section('chat-content')
-    <div id="dialog" style="max-height: 60vh; overflow: hidden; overflow-y: auto;">
-        <button id="loadMore">Предыдущие</button>
-        <ul id="messageList"></ul>
-    </div>
+    <div class="frame bord-second pos fib-13">
+        <div id="dialog" style="max-height: 60vh; overflow: hidden; overflow-y: auto;">
+            <button class="color-contrast hover fib-p-8 fib-r-8 bord-second" id="loadMore">Предыдущие</button>
+            <div id="messageList"></div>
+        </div>
 
-    <form id="messageForm">
-        @csrf
-        <textarea class="w-100" name="message" id="messageText"></textarea>
-        <button type="submit">Отправить</button>
-    </form>
+        <form class="pos fib-gap-8" id="messageForm">
+            @csrf
+            <textarea class="color-contrast pos fib-p-8 fib-r-8 bord-second" name="message" id="messageText"></textarea>
+            <button class="color-contrast hover fib-p-8 fib-r-8 bord-second" type="submit"><span>Отправить</span></button>
+        </form>
+    </div>
 
     <script>
         $(document).ready(function() {
@@ -40,7 +42,7 @@
                     },
                     error: function() {
                         // alert("Ошибка загрузки предыдущих сообщений");
-                        
+
                         $("#loadMore").remove();
                     }
                 });

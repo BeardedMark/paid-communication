@@ -11,8 +11,4 @@
         <br>
         <button type="submit">Сохранить</button>
     </form>
-    <br>
-    <a href="{{ route('messages.show', ['message' => $message, 'chat' => $message->chat]) }}">Просмотр сообщения</a>
-    {{-- <br> --}}
-    {{-- <a href="{{ route('chats.messages.index', ['chat' => $message->chat]) }}">К списку сообщений</a> --}}
 @endsection

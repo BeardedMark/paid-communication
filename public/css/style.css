@@ -1,0 +1,42 @@
+/* root */
+.t-brand {
+  color: var(--brand);
+}
+.form-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form-feedback-button {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.about-newspaper{
+  text-align: justify;
+}
+
+.contact-frame {
+  padding: 20px;
+  height: 100%;
+  border: 1px solid transparent;
+}
+.contact-frame:hover {
+  background-color: var(--accent);
+  color: var(--main);
+}
+.contact-ico {
+  font-size: 36px;
+  text-align: center;
+  font-family: "Noto Emoji", sans-serif;
+  user-select: none;
+}
+.contact-title {
+  font-size: 28px;
+  text-align: center;
+}
+.contact-description {
+  font-size: 12px;
+  text-align: center;
+}

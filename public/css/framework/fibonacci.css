@@ -1,0 +1,176 @@
+/* Fib wireframe */
+/* .fib {
+    outline: dashed 1px #7B61FF;
+    outline-offset: -1px;
+}
+
+.fib-21 {
+    outline: solid 1px var(--accent);
+    outline-offset: -1px;
+}
+
+.fib-13 {
+    outline: solid 1px var(--warning);
+    outline-offset: -1px;
+}
+
+.fib-8 {
+    outline: solid 1px var(--success);
+    outline-offset: -1px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+button,
+input {
+    background-color: #80808080 !important;
+    color: black !important;
+} */
+
+
+.fib-21 {
+    border-radius: 21px;
+    padding: 8px;
+    gap: 8px;
+}
+
+.fib-13 {
+    border-radius: 13px;
+    padding: 5px;
+    gap: 5px;
+}
+
+.fib-8 {
+    border-radius: 8px;
+    padding: 8px;
+    gap: 8px;
+}
+
+.fib-gap-89 {
+    gap: 89px;
+}
+
+.fib-gap-55 {
+    gap: 55px;
+}
+
+.fib-gap-34 {
+    gap: 34px;
+}
+
+.fib-gap-21 {
+    gap: 21px;
+}
+
+.fib-gap-13 {
+    gap: 13px;
+}
+
+.fib-gap-8 {
+    gap: 8px;
+}
+
+.fib-gap-5 {
+    gap: 5px;
+}
+
+.fib-gap-0 {
+    gap: 0px
+}
+
+.fib-r-21 {
+    border-radius: 21px;
+}
+
+.fib-r-13 {
+    border-radius: 13px;
+}
+
+.fib-r-8 {
+    border-radius: 8px;
+}
+
+.fib-r-5 {
+    border-radius: 5px;
+}
+
+.fib-p-34 {
+    padding: 34px;
+}
+
+.fib-p-21 {
+    padding: 21px;
+}
+
+.fib-p-13 {
+    padding: 13px;
+}
+
+.fib-p-8 {
+    padding: 8px;
+}
+
+.fib-p-5 {
+    padding: 5px;
+}
+
+.fib-px-21 {
+    padding-left: 21px;
+    padding-right: 21px;
+}
+
+.fib-px-13 {
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+.fib-px-8 {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.fib-px-5 {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.fib-py-144 {
+    padding-top: 144px;
+    padding-bottom: 144px;
+}
+
+.fib-py-89 {
+    padding-top: 89px;
+    padding-bottom: 89px;
+}
+
+.fib-py-55 {
+    padding-top: 55px;
+    padding-bottom: 55px;
+}
+
+.fib-py-21 {
+    padding-top: 21px;
+    padding-bottom: 21px;
+}
+
+.fib-py-13 {
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.fib-py-8 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.fib-py-5 {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

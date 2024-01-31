@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
+    {{-- <div class="row">
         <div class="col">
             <h1>@yield('h1', 'Все чаты')</h1>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row">
         <div class="col col-4">
-            <ul id="chatList">
-            </ul>
+            <div id="chatList" class="pos pos-col fib-gap-13">
+            </div>
         </div>
 
         <div class="col">
@@ -26,12 +26,8 @@
                     url: "{{ route('chats.ajax') }}",
                     method: "GET",
                     success: function(data) {
-                        // Очищаем текущий список чатов
                         $("#chatList").empty();
-
-                        // Вставляем новые данные в список
-                        $("#chatList").append(data.outgoingChatsHtml);
-                        $("#chatList").append(data.incomingChatsHtml);
+                        $("#chatList").append(data.ChatsHtml);
                     },
                     error: function() {
                         alert("Ошибка загрузки чатов");
@@ -39,7 +35,6 @@
                 });
             }
 
-            // Загружаем чаты при загрузке страницы и обновляем каждые 5 секунд
             loadChats();
             setInterval(loadChats, 5000);
         });

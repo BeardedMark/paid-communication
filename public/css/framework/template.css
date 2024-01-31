@@ -1,0 +1,321 @@
+:root {
+    --background: #f5f5f5;
+    --main: #ffffff;
+    --accent: #f12352;
+    --contrast: #333;
+    --second: #dadada;
+
+    --danger: #FA5252;
+    --success: #40C057;
+    --warning: #ffbf00;
+}
+
+.color-main {
+    color: var(--main);
+}
+
+.color-accent {
+    color: var(--accent);
+}
+
+.color-second {
+    color: var(--second);
+}
+
+.color-contrast {
+    color: var(--contrast);
+}
+
+.color-success {
+    color: var(--success);
+}
+
+.color-warning {
+    color: var(--warning);
+}
+
+.color-danger {
+    color: var(--danger);
+}
+
+.bg-black {
+    background: black;
+}
+
+.back-main {
+    background: var(--main);
+}
+
+.back-accent {
+    background: var(--accent);
+}
+
+.back-contrast {
+    background: var(--contrast);
+}
+
+.back-second {
+    background: var(--second);
+}
+
+.back-success {
+    background: var(--success);
+}
+
+.back-warning {
+    background: var(--warning);
+}
+
+.back-danger {
+    background: var(--danger);
+}
+
+body {
+    background-color: var(--background);
+    color: var(--contrast);
+
+    /* font-family: 'Inter', sans-serif; */
+    /* font-size: 12px; */
+    /* letter-spacing: .3px; */
+}
+
+.lock {
+    user-select: none;
+    pointer-events: none;
+    cursor: no-drop;
+    /* opacity: .2; */
+    filter: blur(5px);
+}
+
+.frame {
+    background: var(--fill);
+    transition: 0.3s;
+    width: 100%;
+    /* background: #ffffffaa;
+    backdrop-filter: blur(5px); */
+}
+
+
+.frame:hover {
+    position: relative;
+    z-index: 100;
+    box-shadow:
+        0px 2.07px 2.21px 0px rgba(46, 60, 80, 0.01),
+        0px 4.98px 5.32px 0px rgba(46, 60, 80, 0.02),
+        0px 9.39px 10.01px 0px rgba(46, 60, 80, 0.03),
+        0px 16.75px 17.86px 0px rgba(46, 60, 80, 0.04),
+        0px 31.33px 33.42px 0px rgba(46, 60, 80, 0.05),
+        0px 75px 80px 0px rgba(46, 60, 80, 0.07);
+}
+
+
+.pos-overlay {
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: .8;
+}
+
+.over-dark {
+    background: rgba(0, 0, 0, .8);
+    backdrop-filter: blur(13px);
+    opacity: 1;
+}
+
+.pos-wallpaper {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* Font size */
+.font-size-1 {
+    font-size: 32px;
+}
+
+.font-size-2 {
+    font-size: 24px;
+}
+
+.font-size-3 {
+    font-size: 20px;
+}
+
+.font-size-4 {
+    font-size: 16px;
+}
+
+.font-size-5 {
+    font-size: 14px;
+}
+
+.font-size-6 {
+    font-size: 12px;
+}
+
+/* Font style */
+
+.font-bold {
+    letter-spacing: .5px;
+    font-weight: 700;
+}
+
+.font-size-large {
+    font-size: 89px;
+}
+
+.font-regular {
+    font-weight: 400;
+}
+
+.emoji {
+    font-family: "Noto Emoji", sans-serif;
+    user-select: none;
+}
+
+
+/* font - color */
+
+
+
+/* background - color */
+
+/* border - color */
+
+.bord-bot {
+    border-bottom: 1px solid var(--second);
+}
+
+.bord-top {
+    border-top: 1px solid var(--second);
+}
+
+.bord-accent {
+    border: solid 1px var(--accent);
+}
+
+.bord-second {
+    border: solid 1px var(--second);
+}
+
+.bord-contrast {
+    border: solid 1px var(--contrast);
+}
+
+.bord-success {
+    border: solid 1px var(--success);
+}
+
+.bord-warning {
+    border: solid 1px var(--warning);
+}
+
+.bord-danger {
+    border: solid 1px var(--danger);
+}
+
+/* Styles */
+.link {
+    transition: .3s;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: var(--accent);
+}
+
+.button {
+    transition: .3s;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    line-height: inherit;
+}
+
+.button:hover {
+    color: var(--accent);
+}
+
+.hover {
+    transition: .3s;
+}
+
+.hover:hover {
+    background: var(--background);
+    color: var(--contrast);
+}
+
+.hover-second {
+    background: #F5F5F5;
+    color: var(--contrast);
+    transition: .3s;
+}
+
+.hover-second:hover {
+    background: #e5e5e5;
+    color: var(--contrast);
+}
+
+.hover-contrast {
+    background: #333333;
+    color: #F5F5F5;
+}
+
+.hover-contrast:hover {
+    background: #444;
+    color: #F5F5F5;
+}
+
+.hover-accent {
+    background: var(--accent);
+    color: #F5F5F5;
+}
+
+.hover-accent:hover {
+    background: var(--accent);
+    box-shadow: inset 0 0 100vmax rgba(255, 255, 255, 0.2);
+    color: #F5F5F5;
+}
+
+.hover-success {
+    background: #40C057;
+    color: #F5F5F5;
+}
+
+.hover-success:hover {
+    background: #38a94d;
+    color: #F5F5F5;
+}
+
+.hover-warning {
+    background: #ffbf00;
+    color: #F5F5F5;
+}
+
+.hover-warning:hover {
+    background: #efb400;
+    color: #F5F5F5;
+}
+
+.hover-danger {
+    background: #FA5252;
+    color: #F5F5F5;
+}
+
+.hover-danger:hover {
+    background: #dc4848;
+    color: #F5F5F5;
+}

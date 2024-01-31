@@ -31,16 +31,20 @@
 <body class="body">
     {{-- Шапка сайта --}}
     <header>
-        @component('partials.header')
-        @endcomponent
+        {{-- @component('partials.header')
+        @endcomponent --}}
     </header>
 
     {{-- <Навигация сайта --}}
 
     {{-- Контент сайта --}}
-    <main id="main" class="position-relative">
+    <main id="main" class="position-relative fib-py-21">
         <div class="container">
             <div class="row">
+                <div class="col col-auto">
+                    @component('partials.sidebar')
+                    @endcomponent
+                </div>
                 <div class="col">
                     @yield('content')
                 </div>

@@ -31,20 +31,19 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Chat $chat, Request $request)
+    public function store(Request $request)
     {
-        $message = $request->input('message');
-        // $chat_id = $request->input('chat_id');
+        $chat = Chat::findOrFail($request->input('chat'));
 
         $messageData = [
             'user_id' => Auth::user()->id,
             'chat_id' => $chat->id,
-            'content' => $message,
+            'content' => $request->input('message'),
         ];
 
         Message::create($messageData);
 
-        return redirect()->route('messages.index', $chat);
+        return redirect()->route('chats.show', $chat);
     }
 
     /**
@@ -82,8 +81,7 @@ class MessageController extends Controller
         $message = Message::findOrFail($message);
         $message->delete();
 
-        return redirect()
-            ->route('chats.index');
+        return redirect()->route('chats.show', $message->chat);
     }
 
     public function getPreviewMessages(Chat $chat, Request $request)

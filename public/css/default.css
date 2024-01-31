@@ -1,0 +1,81 @@
+/* :root {
+    --background: #343541;
+    --text: #cccccc;
+    --othertext: #747474;
+    --brand: #10a37f;
+    --frame: #40414F;
+    --overframe: #444654;
+    --subframe: #252526;
+    --underframe: #2A2B32;
+} */
+
+:root {
+    --text: #333333;
+    --othertext: #AEBBD0;
+    
+    --background: #F5F5F5;
+    --frame: white;
+    --overframe: #f3f8fb;
+    
+    --brand: #F12352;
+    --accent: #6dbdff;
+    --primary: #e6eff5;
+    --danger: #ff7d74;
+}
+
+/* ::selection {
+    background-color:  var(--brand);
+    color: #fff;
+  } */
+
+*{
+    font-family: Roboto;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--background);
+    background-repeat: repeat;
+    color: var(--text);
+}
+
+body::after {
+    content: "";
+    /* background: url("/public/storage/cgat.png"); */
+    opacity: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -100;
+}
+/* 
+h1 {
+    font-size: xx-large;
+}
+h2 {
+    font-size: x-large;
+}
+h3 {
+    font-size: larger;
+}
+h4 {
+    font-size: large;
+}
+h5 {
+    font-size: medium;
+}
+h6 {
+    font-size: small;
+}
+h6 {
+    font-size: smaller;
+}
+small {
+    font-size: small;
+} */

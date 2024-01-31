@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Carbon;
 
 class Chat extends Model
 {
@@ -36,10 +37,10 @@ class Chat extends Model
         $title = "";
 
         if ($this->initiator_id === $this->owner_id) {
-            $title .= "Ты шизофреник?";
-        } else if($this->initiator_id == Auth::user()->id) {
+            $title .= "Шизофрения";
+        } else if ($this->initiator_id == Auth::user()->id) {
             $title .= $this->owner->name;
-        } else if($this->owner_id == Auth::user()->id) {
+        } else if ($this->owner_id == Auth::user()->id) {
             $title .= $this->initiator->name;
         }
         return $title;
@@ -48,5 +49,33 @@ class Chat extends Model
     public function getLastMessages(int $count): Collection
     {
         return $this->messages()->latest()->take($count)->get();
+    }
+
+    public function isIncoming()
+    {
+        if ($this->owner_id == Auth::user()->id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getLastMessageDateTime()
+    {
+        $lastMessage = $this->messages()->latest()->first();
+
+        if ($lastMessage) {
+            $messageDateTime = Carbon::parse($lastMessage->created_at);
+
+            if ($messageDateTime->isToday()) {
+                return $messageDateTime->format('H:i');
+            } elseif ($messageDateTime->isYesterday()) {
+                return 'вчера ' . $messageDateTime->format('H:i');
+            } else {
+                return $messageDateTime->format('d.m.Y H:i');
+            }
+        }
+        
+        return '';
     }
 }
