@@ -41,7 +41,13 @@ class MessageController extends Controller
             'content' => $request->input('message'),
         ];
 
-        Message::create($messageData);
+        $message = Message::create($messageData);
+
+        $owner = $message->chat->owner;
+        $owner->update(['balance' => $owner->balance + 100]);
+        
+        $initiator = $message->chat->initiator;
+        $initiator->update(['balance' => $initiator->balance - 100]);
 
         return redirect()->route('chats.show', $chat);
     }

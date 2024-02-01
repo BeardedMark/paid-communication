@@ -45,6 +45,7 @@
                     @component('partials.sidebar')
                     @endcomponent
                 </div>
+                
                 <div class="col">
                     @yield('content')
                 </div>

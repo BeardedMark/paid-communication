@@ -3,17 +3,46 @@
 @section('h1', $chat->getTitle())
 
 @section('chat-content')
-    <div class="frame bord-second pos fib-13">
-        <div id="dialog" style="max-height: 60vh; overflow: hidden; overflow-y: auto;">
-            <button class="color-contrast hover fib-p-8 fib-r-8 bord-second" id="loadMore">Предыдущие</button>
-            <div id="messageList"></div>
+    <div class="row">
+        <div class="col">
+            <div class="pos fib-gap-13">
+
+                @component('users.components.card', ['user' => $chat->getCompanion()])
+                @endcomponent
+
+                <div class="back-main frame bord-second pos fib-13">
+                    <div id="dialog" style="max-height: 60vh; overflow: hidden; overflow-y: auto;">
+                        <button class="color-contrast hover fib-p-8 fib-r-8 bord-second" id="loadMore">Предыдущие</button>
+                        <div id="messageList"></div>
+                    </div>
+                </div>
+
+                <div class="back-main frame bord-second pos fib-13">
+                    <form class="pos fib-gap-5" id="messageForm">
+                        @csrf
+                        <textarea class="color-contrast pos fib-p-8 fib-r-8 bord-second" name="message" id="messageText"></textarea>
+                        <button class="color-contrast hover fib-p-8 fib-r-8 bord-second"
+                            type="submit"><span>Отправить</span></button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <form class="pos fib-gap-8" id="messageForm">
-            @csrf
-            <textarea class="color-contrast pos fib-p-8 fib-r-8 bord-second" name="message" id="messageText"></textarea>
-            <button class="color-contrast hover fib-p-8 fib-r-8 bord-second" type="submit"><span>Отправить</span></button>
-        </form>
+        <div class="col col-auto">
+            <div class="pos fib-gap-13">
+                <div class="back-main frame bord-second pos fib-13">
+                    <a class="color-contrast hover fib-p-8 fib-r-8 link" href="#">❤️</a>
+                    <a class="color-contrast hover fib-p-8 fib-r-8 link" href="#">⚙️</a>
+
+                    <form class="color-contrast hover fib-p-8 fib-r-8 link" action="{{ route('chats.clean', $chat) }}"
+                        method="POST">
+                        @csrf
+
+                        <button class="button" type="submit">🗑️</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -31,6 +60,7 @@
                     },
                     success: function(data) {
                         $("#messageList").prepend(data.messagesHtml);
+
                         $("#messageList").prepend(`<hr>`);
 
                         startDateMessages = data.previousDate;

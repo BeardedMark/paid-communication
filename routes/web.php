@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('chats', ChatController::class);
     Route::get('/chats/{chat}/messages/preview', [MessageController::class, 'getPreviewMessages'])->name('chats.messages.preview');
     Route::get('/chats/{chat}/messages/new', [MessageController::class, 'getNewMessages'])->name('chats.messages.new');
+    Route::post('/chats/{chat}/clean', [ChatController::class, 'clean'])->name('chats.clean');
 
     // Route::resource('chats.messages', MessageController::class);
     Route::resource('messages', MessageController::class);

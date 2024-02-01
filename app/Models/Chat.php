@@ -32,6 +32,14 @@ class Chat extends Model
         return $this->hasMany(Message::class, 'chat_id');
     }
 
+    public function getCompanion()
+    {
+        if ($this->initiator == Auth::user()) {
+            return $this->owner;
+        }
+        return $this->initiator;
+    }
+
     public function getTitle()
     {
         $title = "";
@@ -75,7 +83,7 @@ class Chat extends Model
                 return $messageDateTime->format('d.m.Y H:i');
             }
         }
-        
+
         return '';
     }
 }

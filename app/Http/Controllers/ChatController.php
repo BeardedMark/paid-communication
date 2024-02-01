@@ -41,7 +41,7 @@ class ChatController extends Controller
             'initiator_id' => $initiator_id
         ]);
 
-        return redirect()->route('chats.index', $chat);
+        return redirect()->route('chats.show', $chat);
     }
 
     /**
@@ -75,23 +75,19 @@ class ChatController extends Controller
     {
         //
     }
-    public function getChatsAjax()
+    public function clean(Chat $chat)
     {
-        // $outgoing = Auth::user()->outgoing;
-        // $incoming = Auth::user()->incoming;
-    
-        // return response()->json([
-        //     'incomingChatsHtml' => view('chats.components.incoming', compact('incoming'))->render(),
-        //     'outgoingChatsHtml' => view('chats.components.outgoing', compact('outgoing'))->render(),
-        // ]);
-        
+        $chat->messages()->delete();
+        return redirect()->route('chats.show', $chat);
+    }
+    public function getChatsAjax()
+    {        
         $outgoing = Auth::user()->outgoing;
         $incoming = Auth::user()->incoming;
 
         $chats = $outgoing->merge($incoming);
         return response()->json([
             'ChatsHtml' => view('chats.components.preview', ['chats' => $chats])->render(),
-            // 'outgoingChatsHtml' => view('chats.components.preview', ['chats' => $outgoing])->render(),
         ]);
     }
 }

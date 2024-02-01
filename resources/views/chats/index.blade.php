@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- <div class="row">
-        <div class="col">
-            <h1>@yield('h1', 'Все чаты')</h1>
-        </div>
-    </div> --}}
-
     <div class="row">
         <div class="col col-4">
-            <div id="chatList" class="pos pos-col fib-gap-13">
+            <div class="pos pos-col fib-gap-13">
+                @component('users.components.card', ['user' => Auth::user()])
+                @endcomponent
+
+                <div id="chatList" class="back-main frame bord-second pos fib-13 font-size-6">
+                    {{-- Список чатов --}}
+                </div>
             </div>
         </div>
 
